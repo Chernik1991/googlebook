@@ -48,8 +48,6 @@ export const SearchTermForm = () => {
 
     dispatch(setSearch({ values: values }));
 
-    console.log(values);
-
     navigate("books/list");
   };
 

@@ -20,12 +20,10 @@ const rootReducer: ReducersMapObject<StateSchema> = {
 };
 export const rtkQueryErrorLogger: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
-    // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     let currentError: string;
     if (isRejectedWithValue(action)) {
       if (action.payload.data?.error?.message?.length) {
         currentError = action.payload.data.error?.message;
-        console.log(action.payload.data.error.message);
       } else {
         currentError = "some error";
       }

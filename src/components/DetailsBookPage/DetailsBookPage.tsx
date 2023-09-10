@@ -10,7 +10,6 @@ import { BooksType } from "components/BooksList/BooksSchema";
 
 export const DetailsBookPage = () => {
   const { books } = useAppSelector<BooksType>(getBooksData);
-  console.log(books);
   const navigate = useNavigate();
 
   let { id } = useParams();
