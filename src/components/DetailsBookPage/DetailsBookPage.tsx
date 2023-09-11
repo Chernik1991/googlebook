@@ -7,14 +7,30 @@ import noCover from "../../assets/no_cover_thumb.gif";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { getBooksData } from "components/BooksList/BooksSelector";
 import { BooksType } from "components/BooksList/BooksSchema";
+import { setBooks } from "components/BooksList/BooksSlice";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
+import { SearchType } from "components/SerchTermForm/SearchSchema";
+import { getSearchData } from "components/SerchTermForm/SearchSelector";
+import { setSearch } from "components/SerchTermForm/SearchSlice";
 
 export const DetailsBookPage = () => {
   const { books } = useAppSelector<BooksType>(getBooksData);
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   let { id } = useParams();
-
-  //This effect is intended to redirect to the home page after reloading the details book page
+  const { sort, searchTerm, category } =
+    useAppSelector<SearchType>(getSearchData);
+  const currentBook = books.find((e) => e.id === id);
+  const authors = currentBook?.volumeInfo.authors?.join(", ");
+  const img = currentBook?.volumeInfo.imageLinks?.thumbnail;
+  const title = currentBook?.volumeInfo.title;
+  const categories = currentBook?.volumeInfo.categories;
+  const description = currentBook?.volumeInfo.description;
+  const handleOnClick = () => {
+    dispatch(setSearch({ values: { searchTerm, page: 1, category, sort } }));
+    dispatch(setBooks({ books: [] }));
+    navigate("/books/list");
+  };
   useEffect(() => {
     if (books?.length === 0) {
       navigate("/", { replace: true });
@@ -24,19 +40,6 @@ export const DetailsBookPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const currentBook = books.find((e) => e.id === id);
-
-  const authors = currentBook?.volumeInfo.authors?.join(", ");
-  const img = currentBook?.volumeInfo.imageLinks?.thumbnail;
-  const title = currentBook?.volumeInfo.title;
-  const categories = currentBook?.volumeInfo.categories;
-  const description = currentBook?.volumeInfo.description;
-
-  const handleOnClick = () => {
-    navigate("/books/list");
-  };
-
   return (
     <Container>
       <Row xs={1} md={2} className="mt-5">

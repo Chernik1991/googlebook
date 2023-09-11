@@ -5,15 +5,16 @@ import { BooksType } from "components/BooksList/BooksSchema";
 
 export const booksSlice = createSlice({
   name: "Books",
-  initialState: {} as BooksType,
+  initialState: { books: [] } as BooksType,
   reducers: {
     setBooks: (state, action: PayloadAction<{ books: Items[] }>) => {
       state.books = action.payload.books;
     },
+    addBooks: (state, action: PayloadAction<{ books: Items[] }>) => {
+      state.books = [...state.books, ...action.payload.books];
+    },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { setBooks } = booksSlice.actions;
-
+export const { setBooks, addBooks } = booksSlice.actions;
 export const { reducer: booksReducer } = booksSlice;

@@ -8,7 +8,7 @@ import { DetailsBookPage } from "components/DetailsBookPage/DetailsBookPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const App = () => {
+export const App = () => {
   return (
     <>
       <Header />
@@ -21,5 +21,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;

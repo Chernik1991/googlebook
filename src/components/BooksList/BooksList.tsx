@@ -10,7 +10,9 @@ import { useGetBooksQuery } from "features/service/QueryBooks";
 import { Loader } from "components/Loader/Loader";
 import { setSearch } from "components/SerchTermForm/SearchSlice";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
-import { setBooks } from "components/BooksList/BooksSlice";
+import { addBooks } from "components/BooksList/BooksSlice";
+import { getBooksData } from "components/BooksList/BooksSelector";
+import { BooksType } from "components/BooksList/BooksSchema";
 
 export const BooksList = () => {
   const { sort, searchTerm, page, category } =
@@ -25,26 +27,29 @@ export const BooksList = () => {
     category,
     page: possibleCountPage,
   });
-  const books = data?.items;
   const total = data?.totalItems;
   const navigate = useNavigate();
-  //This effect is intended to redirect to the home page after reloadding the page with a list of books
-  useEffect(() => {
-    if (!isLoading && books?.length === 0) {
-      navigate("/", { replace: true });
-    }
-  }, [books, isLoading, navigate]);
-  // if (books) {
-  //   dispatch(setBooks({books }));
-  // }
+  if (total === 0) {
+    navigate("/", { replace: true });
+    dispatch(addBooks({ books: [] }));
+  }
+  const books = data?.items;
+  const { books: carrentbooks } = useAppSelector<BooksType>(getBooksData);
   const handleOnClick = () => {
     dispatch(
       setSearch({ values: { searchTerm, sort, category, page: nextPage } }),
     );
   };
   useEffect(() => {
-    dispatch(setBooks({ books: books! }));
-  }, [books, dispatch]);
+    if (!isLoading && books?.length === 0) {
+      navigate("/", { replace: true });
+    }
+  }, [books, isLoading, navigate]);
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(addBooks({ books: books! }));
+    }
+  }, [books, dispatch, isLoading]);
   return (
     <Container className="mb-5">
       {isLoading ? (
@@ -52,7 +57,11 @@ export const BooksList = () => {
       ) : (
         <>
           <div className="mt-3 text-center fw-bold">Found {total} result</div>
-          {books && <CardsGrid books={books} />}
+          {books! && (
+            <CardsGrid
+              books={carrentbooks.length === 0 ? books! : carrentbooks}
+            />
+          )}
           <div className="text-center">
             {total! > 0 && (
               <Button

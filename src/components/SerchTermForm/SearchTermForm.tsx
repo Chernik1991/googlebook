@@ -14,11 +14,13 @@ import {
 import { CATEGORY_SELECT_OPTIONS, SORT_SELECT_OPTIONS } from "constant/form";
 import { useAppDispatch } from "common/hooks/useAppDispatch";
 import { setSearch } from "components/SerchTermForm/SearchSlice";
+import { setBooks } from "components/BooksList/BooksSlice";
 
 type FormControlElement =
   | HTMLInputElement
   | HTMLTextAreaElement
   | HTMLSelectElement;
+
 export const SearchTermForm = () => {
   const initialValues = {
     searchTerm: "",
@@ -47,6 +49,7 @@ export const SearchTermForm = () => {
     }
 
     dispatch(setSearch({ values: values }));
+    dispatch(setBooks({ books: [] }));
 
     navigate("books/list");
   };

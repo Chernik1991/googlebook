@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { SearchType } from "components/SerchTermForm/SearchSchema";
 
 export const searchSlice = createSlice({
@@ -15,7 +15,5 @@ export const searchSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setSearch } = searchSlice.actions;
-
 export const { reducer: searchReducer } = searchSlice;
