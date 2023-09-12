@@ -21,7 +21,7 @@ export const BooksList = () => {
   const dispatch = useAppDispatch();
   const possibleCount = nextPage * 30;
   const possibleCountPage = page! * 30;
-  const { data, isLoading } = useGetBooksQuery({
+  const { data, isLoading, isFetching } = useGetBooksQuery({
     searchTerm,
     sort,
     category,
@@ -29,27 +29,26 @@ export const BooksList = () => {
   });
   const total = data?.totalItems;
   const navigate = useNavigate();
-  if (total === 0) {
-    navigate("/", { replace: true });
+  if (!isFetching && total === 0) {
+    navigate("/");
     dispatch(addBooks({ books: [] }));
   }
+
   const books = data?.items;
+  useEffect(() => {
+    if (!isLoading && books !== undefined) {
+      dispatch(addBooks({ books: books! }));
+    }
+    if (!isLoading && books === undefined) {
+      navigate("/books/notFound", { replace: true });
+    }
+  }, [books, dispatch, isLoading, navigate]);
   const { books: carrentbooks } = useAppSelector<BooksType>(getBooksData);
   const handleOnClick = () => {
     dispatch(
       setSearch({ values: { searchTerm, sort, category, page: nextPage } }),
     );
   };
-  useEffect(() => {
-    if (!isLoading && books?.length === 0) {
-      navigate("/", { replace: true });
-    }
-  }, [books, isLoading, navigate]);
-  useEffect(() => {
-    if (!isLoading) {
-      dispatch(addBooks({ books: books! }));
-    }
-  }, [books, dispatch, isLoading]);
   return (
     <Container className="mb-5">
       {isLoading ? (

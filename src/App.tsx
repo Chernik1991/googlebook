@@ -7,6 +7,7 @@ import { BooksList } from "components/BooksList/BooksList";
 import { DetailsBookPage } from "components/DetailsBookPage/DetailsBookPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NotFound } from "components/notFound/NotFound";
 
 export const App = () => {
   return (
@@ -16,6 +17,7 @@ export const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="books/list" element={<BooksList />} />
         <Route path="books/:id" element={<DetailsBookPage />} />
+        <Route path="books/notFound" element={<NotFound />} />
       </Routes>
       <ToastContainer />
     </>

@@ -1,12 +1,12 @@
 FROM node:16.14.0 as dependencies
-WORKDIR /app
+WORKDIR /
 COPY package.json yarn.lock ./
 RUN yarn install
 
 FROM node:16.14.0 as builder
-WORKDIR /app
+WORKDIR /
 COPY . .
-COPY --from=dependencies /app/node_modules ./node_modules
+COPY --from=dependencies /node_modules ./node_modules
 RUN yarn build:production
 
 FROM node:16.14.0 as runner
