@@ -1,3 +1,3 @@
-import { StateSchema } from "store/stateSchema";
+import { StateSchema } from 'store/stateSchema'
 
-export const getSearchData = (state: StateSchema) => state.search;
+export const getSearchData = (state: StateSchema) => state.search

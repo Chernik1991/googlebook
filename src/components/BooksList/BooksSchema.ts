@@ -1,5 +1,5 @@
-import { Items } from "features/service/GetItemsShema";
+import { Items } from 'features/service/GetItemsShema'
 
 export type BooksType = {
-  books: Items[];
-};
+  books: Items[]
+}

@@ -1,29 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
 
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-import noCover from "../../../assets/no_cover_thumb.gif";
-import { BooksType } from "components/BooksList/BooksSchema";
+import noCover from '../../../assets/no_cover_thumb.gif'
+
+import { BooksType } from 'components/BooksList/BooksSchema'
 
 export const CardsGrid = ({ books }: BooksType) => {
   return (
     <Row xs={1} md={2} lg={3} xl={4} className="g-4 mt-3">
       {books!.length > 0 &&
-        books!.map((el) => {
-          const authors = el.volumeInfo.authors?.join(", ");
-          const img = el.volumeInfo.imageLinks?.thumbnail;
-          const title = el.volumeInfo.title;
-          const firstCategory = el.volumeInfo.categories?.[0];
+        books!.map(el => {
+          const authors = el.volumeInfo.authors?.join(', ')
+          const img = el.volumeInfo.imageLinks?.thumbnail
+          const title = el.volumeInfo.title
+          const firstCategory = el.volumeInfo.categories?.[0]
 
           return (
             <Col key={el.id}>
               <Card bg="light">
                 <div className="card-img-contaier d-flex justify-content-center p-5">
-                  <Link
-                    to={`/books/${el.id}`}
-                    className="text-decoration-none text-reset"
-                  >
+                  <Link to={`/books/${el.id}`} className="text-decoration-none text-reset">
                     <Card.Img className="shadow" src={img || noCover} />
                   </Link>
                 </div>
@@ -36,8 +34,8 @@ export const CardsGrid = ({ books }: BooksType) => {
                 </Card.Body>
               </Card>
             </Col>
-          );
+          )
         })}
     </Row>
-  );
-};
+  )
+}

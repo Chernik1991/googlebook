@@ -1,3 +1,3 @@
-import { StateSchema } from "store/stateSchema";
+import { StateSchema } from 'store/stateSchema'
 
-export const getBooksData = (state: StateSchema) => state.books;
+export const getBooksData = (state: StateSchema) => state.books

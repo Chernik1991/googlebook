@@ -1,9 +1,9 @@
-import { baseAPI } from "api/baseAPI";
-import { SearchType } from "components/SerchTermForm/SearchSchema";
-import { BooksType } from "components/BooksList/BooksSchema";
+import { baseAPI } from 'api/baseAPI'
+import { BooksType } from 'components/BooksList/BooksSchema'
+import { SearchType } from 'components/SerchTermForm/SearchSchema'
 
 export interface StateSchema {
-  [baseAPI.reducerPath]: ReturnType<typeof baseAPI.reducer>;
-  search: SearchType;
-  books: BooksType;
+  [baseAPI.reducerPath]: ReturnType<typeof baseAPI.reducer>
+  search: SearchType
+  books: BooksType
 }

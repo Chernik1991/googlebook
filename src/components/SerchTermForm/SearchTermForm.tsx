@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState } from 'react'
+
 import {
   Button,
   Col,
@@ -10,49 +10,48 @@ import {
   FormSelect,
   InputGroup,
   Row,
-} from "react-bootstrap";
-import { CATEGORY_SELECT_OPTIONS, SORT_SELECT_OPTIONS } from "constant/form";
-import { useAppDispatch } from "common/hooks/useAppDispatch";
-import { setSearch } from "components/SerchTermForm/SearchSlice";
-import { setBooks } from "components/BooksList/BooksSlice";
+} from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
-type FormControlElement =
-  | HTMLInputElement
-  | HTMLTextAreaElement
-  | HTMLSelectElement;
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { setBooks } from 'components/BooksList/BooksSlice'
+import { setSearch } from 'components/SerchTermForm/SearchSlice'
+import { CATEGORY_SELECT_OPTIONS, SORT_SELECT_OPTIONS } from 'constant/form'
+
+type FormControlElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 
 export const SearchTermForm = () => {
   const initialValues = {
-    searchTerm: "",
-    category: "",
+    searchTerm: '',
+    category: '',
     page: 0,
-    sort: "Relevance",
-  };
-  const [values, setValues] = useState(initialValues);
-  const [isInvalid, setIsInvalid] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+    sort: 'Relevance',
+  }
+  const [values, setValues] = useState(initialValues)
+  const [isInvalid, setIsInvalid] = useState(false)
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const handleOnChange = (e: ChangeEvent<FormControlElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
-    setValues({ ...values, [name]: value });
-    setIsInvalid(false);
-  };
+    setValues({ ...values, [name]: value })
+    setIsInvalid(false)
+  }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (values.searchTerm === "") {
-      setIsInvalid(true);
+    if (values.searchTerm === '') {
+      setIsInvalid(true)
 
-      return;
+      return
     }
 
-    dispatch(setSearch({ values: values }));
-    dispatch(setBooks({ books: [] }));
+    dispatch(setSearch({ values: values }))
+    dispatch(setBooks({ books: [] }))
 
-    navigate("books/list");
-  };
+    navigate('books/list')
+  }
 
   return (
     <Form noValidate onSubmit={handleSubmit}>
@@ -70,12 +69,7 @@ export const SearchTermForm = () => {
               <FormControl.Feedback tooltip type="invalid">
                 Required.
               </FormControl.Feedback>
-              <Button
-                id="submit-button"
-                size="sm"
-                variant="secondary"
-                type="submit"
-              >
+              <Button id="submit-button" size="sm" variant="secondary" type="submit">
                 Search
               </Button>
             </InputGroup>
@@ -86,12 +80,7 @@ export const SearchTermForm = () => {
         <Row className="justify-content-center">
           <Col className="me-2" xs md={2}>
             <FormLabel className="text-white">Categories:</FormLabel>
-            <FormSelect
-              onChange={handleOnChange}
-              value={values.category}
-              name="category"
-              size="sm"
-            >
+            <FormSelect onChange={handleOnChange} value={values.category} name="category" size="sm">
               {CATEGORY_SELECT_OPTIONS.map(({ name, value }, index) => (
                 <option key={index} value={value}>
                   {name}
@@ -101,12 +90,7 @@ export const SearchTermForm = () => {
           </Col>
           <Col className="ms-2" xs md={2}>
             <FormLabel className="text-white">Sorting By:</FormLabel>
-            <FormSelect
-              onChange={handleOnChange}
-              value={values.sort}
-              name="sort"
-              size="sm"
-            >
+            <FormSelect onChange={handleOnChange} value={values.sort} name="sort" size="sm">
               {SORT_SELECT_OPTIONS.map(({ name, value }, index) => (
                 <option key={index} value={value}>
                   {name}
@@ -117,5 +101,5 @@ export const SearchTermForm = () => {
         </Row>
       </FormGroup>
     </Form>
-  );
-};
+  )
+}
